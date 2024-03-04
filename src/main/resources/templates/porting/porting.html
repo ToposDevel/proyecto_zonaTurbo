@@ -1,0 +1,109 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+
+</head>
+<body lang="es" style="font-size: 18px;">
+	<div th:insert="fragments/layout :: generalHeader" class="fixed-top"></div>
+	<br>
+	<div class="container">
+		<div>
+			<br>
+			<div class="row">
+				<div class="card col-xs-12 col-sm-5 col-md-5 col-lg-5 mx-auto">
+					<div class="card-body">
+						<form th:action="@{/porting/}" th:method="post" method="post"
+							th:object="${portingForm}">
+							<h4 class="card-title text-center">En TurboRed conservas tu mismo numero, no esperes mas e inicia tu proceso de portabilidad</h4>
+							<p th:if="${confirmationMessage}" class="alert alert-success"
+								role="alert" th:text="${confirmationMessage}"></p>
+							<ul class="global-errors" th:if="${#fields.hasErrors('global')}">
+								<li class="text-danger"
+									th:each="err : ${#fields.errors('global')}" th:text="${err}">Input
+									is incorrect</li>
+							</ul>
+							<hr>
+							<div class="row">
+								<div class="col-6 form-group">
+									<label for="Name">Nombre completo</label> <input type="text"
+										class="form-control" th:field="*{fullName}" id="fullName"
+										placeholder="Nombre y apellidos" maxlength="50"
+										required="required">
+									<p class="text-danger" th:if="${#fields.hasErrors('fullName')}"
+										th:errors="*{fullName}"></p>
+								</div>
+								<div class="col-6 form-group">
+									<label for="Email" th:text="#{user.email.input}"></label> <input
+										type="email" class="form-control" th:field="*{email}"
+										id="email" placeholder="Ej. juan@gmail.com" maxlength="50"
+										required="required">
+									<p class="text-danger" th:if="${#fields.hasErrors('email')}"
+										th:errors="*{email}"></p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="msisdnPorted"></label>Número celular que deseas
+								portar<input type="text" class="form-control"
+									th:field="*{msisdnPorted}" id="msisdnPorted"
+									placeholder="Número celular a 10 dígitos ej. 5586410100"
+									maxlength="10" required="required">
+								<p class="text-danger"
+									th:if="${#fields.hasErrors('msisdnPorted')}"
+									th:errors="*{msisdnPorted}"></p>
+							</div>
+							<div class="form-group">
+								<label for="iccid">Ingresa el numero ICCID de tu tarjeta
+									SIM. </label> <input type="text" class="form-control"
+									th:field="*{iccid}" id="iccid" placeholder="Iccid SIM Turbored"
+									maxlength="20" required="required">
+								<p class="text-danger" th:if="${#fields.hasErrors('iccid')}"
+									th:errors="*{iccid}"></p>
+							</div>
+							<div class="row">
+								<div class="col-6">
+									<label for="nip">Nip</label> <input type="text"
+										class="form-control" th:field="*{nip}" id="nip"
+										placeholder="Envía nip al 051" minlength="4" maxlength="4"
+										required="required">
+									<p class="text-danger" th:if="${#fields.hasErrors('nip')}"
+										th:errors="*{nip}"></p>
+								</div>
+								<div class="col-6">
+									<br>
+									<div class="row justify-content-center">
+										<button type="submit" class="btn btn-primary">Iniciar
+											portabilidad</button>
+									</div>
+								</div>
+							</div>
+							<br> <label for="Name"> * Verifica que tus datos
+								esten correctos y recuerda que tu nip tiene solo 5 días de
+								vigencia.</label>
+						</form>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-4 mx-auto">
+					<img th:src="@{/images/porting.png}" class="img-responsive"
+						alt="Simcard Gift"> <img th:src="@{/images/happy_woman.png}"
+						class="img-responsive" alt="Simcard Gift">
+				</div>
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 mx-auto">
+					<br>
+					<div class="row">
+						<img th:src="@{/images/get_nip.png}" class="img-responsive"
+							alt="Simcard Gift">
+					</div>
+					<br>
+					<div>
+						<img th:src="@{/images/iccid.png}" class="img-responsive"
+							alt="Simcard Gift"> <br>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal"></div>
+	<div th:insert="fragments/layout :: footer" class="fixed-bottom"></div>
+</body>
+<script th:src="@{/script/util.js}"></script>
+
+</html>

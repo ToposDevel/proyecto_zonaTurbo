@@ -1,0 +1,149 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+
+</head>
+<body oncontextmenu="return false" lang="es">
+<div th:insert="fragments/layout :: generalHeader" class="fixed-top"></div>
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7 mx-auto"
+        >
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 mx-auto">
+                        <h4 class="text-center">Recarga tu Turbored</h4>
+                        <h4 class="text-center">No permitas que nada te detenga</h4>
+                        <p th:if="${confirmationMessage}" class="alert alert-success"
+                           role="alert" th:text="${confirmationMessage}"></p>
+                        <p th:if="${failedMessage}" class="alert alert-danger"
+                           role="alert" th:text="${failedMessage}"></p>
+                    </div>
+                </div>
+                <hr>
+
+                <div   th:if="${expressRechargeForm.paymentMethod} eq 'OxxoPay'" class="row">
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 mx-auto">
+                        <h4 class="text-center">Paga en efectivo en OXXO</h4>
+                        <img th:src="@{/images/oxxo.png}" class="img-responsive"
+                             alt="Pago en oxxo">
+                    </div>
+                </div>
+                <div   th:if="${expressRechargeForm.paymentMethod} eq 'Paynet'" class="row">
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 mx-auto">
+                        <h4 class="text-center">Paga en tiendas Paynet</h4>
+                        <img th:src="@{/images/oxxo.png}" class="img-responsive"
+                             alt="Pago en oxxo">
+                    </div>
+                </div>
+
+                <div   th:if="${expressRechargeForm.paymentMethod} eq 'card'" class="row">
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 mx-auto">
+                        <h4 class="text-center">Tarjetas de crédito o débito</h4>
+                        <img th:src="@{/images/credit_card_payment_conekta.png}"
+                             class="img-responsive" alt="Tarjeta de crédito">
+                    </div>
+                </div>CoppelPay
+
+<div   th:if="${expressRechargeForm.paymentMethod} eq 'CoppelPay'" class="row">
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 mx-auto">
+                        <h4 class="text-center">Paga con CoppelPay</h4>
+                        <img th:src="@{/images/logocoppel.png}" class="img-responsive"
+													alt="Pago Coppel Pay">
+                    </div>
+                </div>
+
+
+            </div>
+
+            <p id="errorMessage" class="alert alert-danger" role="alert"
+               style="display: none;"></p>
+            <div class="card-body">
+                <form id="card-form" th:action="@{/conekta/payment/paymentMethodOxxoPaynet/}"
+                      th:object="${expressRechargeForm}" th:method="POST" method="POST"
+                      action="register">
+                    <ul class="global-errors" th:if="${#fields.hasErrors('global')}">
+                        <li class="text-danger"
+                            th:each="err : ${#fields.errors('global')}" th:text="${err}">Input
+                            is incorrect</li>
+                    </ul>
+                    <div id="cellphoneNumberDiv">
+                        <div class="row">
+                            <div
+                                    class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mx-auto form-group ">
+                                <label for="CellphoneNumber">Telefono celular Turbored
+                                    *</label> <input type="text" class="form-control"
+                                                     th:field="*{cellphoneNumber}" id="cellphoneNumber"
+                                                     placeholder="Numero celular a 10 digitos ej. 5586410100"
+                                                     minlength="10" maxlength="10" required="required">
+                                <p class="text-danger"
+                                   th:if="${#fields.hasErrors('cellphoneNumber')}"
+                                   th:errors="*{cellphoneNumber}"></p>
+                            </div>
+                            <div
+                                    class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mx-auto form-group ">
+                                <label for="cellphoneNumberConfirmation">Confirmar
+                                    numero *</label> <input type="text" class="form-control"
+                                                            th:field="*{cellphoneNumberConfirmation}"
+                                                            id="cellphoneNumberConfirmation"
+                                                            placeholder="Ingresa tus 10 digitos sin espacio."
+                                                            minlength="10" maxlength="10" required="required">
+                                <p class="text-danger"
+                                   th:if="${#fields.hasErrors('cellphoneNumberConfirmation')}"
+                                   th:errors="*{cellphoneNumberConfirmation}"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label>Tipo de recarga: *</label> <select class="form-control"
+                                                                  id="planSelected" required="required" onchange="selectPlan()">
+                        <option value="select"></option>
+                    </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email(opcional) a este email se te enviara la confirmacion de tu recarga.</label>
+                        <input type="email"
+                               class="form-control" th:field="*{email}" id="email"
+                               placeholder="Para recibir notificacion del pago" maxlength="50" required="required">
+                        <p class="text-danger" th:if="${#fields.hasErrors('email')}"
+                           th:errors="*{email}"></p>
+                    </div>
+                    <input type="hidden" th:field="*{planSelectedId}">
+                    <input type="hidden" th:field="*{planSelectedName}">
+                    <input type="hidden" th:field="*{amount}">
+                    <input type="hidden" th:field="*{fromViewUrl}">
+                    <input type="hidden" th:field="*{paymentMethod}">
+                    <div class="row">
+                        <div class="col-6">
+                            <div>
+                                <p>* significa obligatorio</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row justify-content-center">
+                                <button type="submit" class="btn btn-primary">Recargar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div>
+                    <h5 class="text-right">Recuerda, nuestros asesores nunca
+                        pediran tus datos bancarios.</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 mx-auto">
+            <img th:src="@{/images/mov_recharge.png}" class="img-responsive"
+                 alt="Recarga MOVILIDAD">
+        </div>
+
+    </div>
+</div>
+
+<div class="modal"></div>
+<div th:insert="fragments/layout :: footer" class="fixed-bottom"></div>
+</body>
+<script th:src="@{/script/util.js}"></script>
+<script th:src="@{/script/recharge/expressPlusRechargeMov.js}"></script>
+</html>

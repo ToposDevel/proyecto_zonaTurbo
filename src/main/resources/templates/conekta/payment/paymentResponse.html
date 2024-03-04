@@ -1,0 +1,34 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+	      
+</head>
+<body lang="en" class="article">
+	<div th:insert="fragments/layout :: generalHeader" class="fixed-top"></div>
+	<div class="container">
+		<br>
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mx-auto"
+			style="margin-top: 5px;">
+			<p th:if="${confirmationMessage}" class="alert alert-success"
+					th:text="${confirmationMessage}" role="alert"></p>
+			<div class="row justify-content-center" style="margin-top: 20px;">
+				<p th:if="${failedMessage}" class="alert alert-danger" role="alert"
+					th:text="${failedMessage}"></p>
+				<br>
+			</div>
+				<img th:src="@{/images/cellphone_cup.png}" class="img-responsive"
+						alt="Simcard Gift">
+				</div>
+			<br>
+			
+		<div class="row justify-content-center">
+			<p>
+				<a href="https://www.turbored.com/">Regresar </a>
+			</p>
+		</div>
+	
+		</div>
+	<div class="modal"></div>
+	<div th:insert="fragments/layout :: footer" class="fixed-bottom"></div>
+</body>
+<script th:src="@{/script/util.js}"></script>
+</html>

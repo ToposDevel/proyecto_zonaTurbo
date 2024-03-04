@@ -1,0 +1,137 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+<body style = "padding-top: 50px">
+	<div class="container container-fluid">
+		<div class="row" >
+			<div class="col">
+				<div>
+					<img class="img-fluid mx-auto d-block"
+						th:src="@{/images/tr-logo-m.jpg}" alt="logo">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="card col-xs-12 col-sm-12 col-md-6 col-lg-6 mx-auto" >
+				<div class="card-body">
+					<h3 class="card-title text-center" th:text="#{user.create.account.title}"></h3>
+					<p th:if="${confirmationMessage}" class="alert alert-success"
+						role="alert" th:text="${confirmationMessage}"></p>
+					<!--Form-->
+					<form th:action="@{/users/register/}" th:object="${userForm}"
+						th:method="post" method="post" action="register">
+						<ul class="global-errors" th:if="${#fields.hasErrors('global')}">
+							<li class="text-danger"
+								th:each="err : ${#fields.errors('global')}" th:text="${err}">Input
+								is incorrect</li>
+						</ul>
+						<div class="form-group text-right">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" th:field="*{loginWithImei}" id="imeiCheckbox"/>
+									Registrar con IMEI
+								</label>
+							</div>
+						</div>
+						<div id="cellphoneNumberDiv">
+							<div class="form-group ">
+								<label for="CellphoneNumber"
+									th:text="#{user.cellphonenumber.input}"></label> <input
+									type="text" class="form-control" th:field="*{cellphoneNumber}"
+									id="cellphoneNumber"
+									placeholder="Número celular a 10 dígitos ej. 5586410100"
+									minlength="10"
+									maxlength="10" >
+								<p class="text-danger"
+									th:if="${#fields.hasErrors('cellphoneNumber')}"
+									th:errors="*{cellphoneNumber}"></p>
+							</div>
+						</div>
+						<div  id="imeiDiv">
+							<div class="form-group ">
+								<label for="Imei" th:text="#{user.imei.input}"></label> <input
+									type="text" class="form-control" th:field="*{imei}" id="imei"
+									placeholder="IMEI a 15 dígitos ej. 123456106543211"
+									maxlength="15" >
+								<p class="text-danger" th:if="${#fields.hasErrors('imei')}"
+									th:errors="*{imei}"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="Name" th:text="#{user.name.input}"></label>
+							<input type="text"
+								class="form-control" th:field="*{name}" id="name"
+								placeholder=""
+								minlength="3"
+								maxlength="30"
+								required="required">
+							<p class="text-danger" th:if="${#fields.hasErrors('name')}"
+								th:errors="*{name}"></p>
+						</div>
+						<div class="form-group">
+							<label for="LastName" th:text="#{user.lastname.input}"></label>
+							<input type="text"
+								class="form-control" th:field="*{lastName}" id="lastName"
+								placeholder=""
+								minlength="2"
+								maxlength="36"
+								required="required">
+							<p class="text-danger" th:if="${#fields.hasErrors('lastName')}"
+								th:errors="*{lastName}"></p>
+						</div>
+						<div class="form-group">
+							<label for="SecondLastName" th:text="#{user.secondlastname.input}"></label>
+							<input type="text" class="form-control" th:field="*{secondLastName}"
+								id="secondLastName" 
+								placeholder=""
+								minlength="2"
+								maxlength="36">
+							<p class="text-danger"
+								th:if="${#fields.hasErrors('secondLastName')}"
+								th:errors="*{secondLastName}"></p>
+						</div>
+						<div class="form-group">
+							<label for="Email" th:text="#{user.email.input}"></label> 
+							<input type="email" 
+								class="form-control" th:field="*{email}" id="email"
+								placeholder=""
+								maxlength="50"
+								required="required">
+							<p class="text-danger" th:if="${#fields.hasErrors('email')}"
+								th:errors="*{email}"></p>
+						</div>
+						<div class="form-group">
+							<label for="Password" th:text=#{user.password.input}></label> 
+							<input type="password"
+								class="form-control" th:field="*{password}" id="password"
+								placeholder=""
+								minlength="8"
+								maxlength="20"
+								required="required">
+							<p class="text-danger" th:if="${#fields.hasErrors('password')}"
+								th:errors="*{password}"></p>
+						</div>
+						<div class="form-group">
+							<label for="passwordConfirmation" th:text="#{user.passwordconfirmation.input}"></label> 
+							<input
+								type="password" class="form-control" th:field="*{passwordConfirmation}"
+								id="passwordConfirmation" placeholder=""
+								maxlength="20"
+								required="required">
+							<p class="text-danger" th:if="${#fields.hasErrors('passwordConfirmation')}"
+								th:errors="*{passwordConfirmation}"></p>
+						</div>
+						<div class="row justify-content-center">
+							<button type="submit" class="btn btn-primary" th:text=#{create.button}></button>
+						</div>
+					</form>
+					<p>
+						<label th:text="#{user.already.have.account.text}"></label><label>  </label><a href="/login" th:text="#{user.click.here.text}"></a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:insert="fragments/layout :: footer" class="fixed-bottom"></div>
+</body>
+<script th:src="@{/script/user/newUser.js}" type="text/javascript"></script>
+</html>

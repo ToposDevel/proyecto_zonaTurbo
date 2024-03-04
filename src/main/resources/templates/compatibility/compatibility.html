@@ -1,0 +1,100 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+
+</head>
+<body lang="es" style="font-size: 18px;">
+	<div th:insert="fragments/layout :: generalHeader" class="fixed-top"></div>
+	<br>
+	<div class="container">
+		<div>
+			<br>
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mx-auto">
+					<!-- <div class="card-body"> -->
+
+					<form th:action="@{/compatibility/}" th:method="post" method="post"
+						th:object="${compatibilityForm}"> 
+						<h4 class="text-center">Valida si con tu equipo podrás gozar
+							de los beneficios que ofrece la red.</h4>
+						<hr>
+						<br>
+						<div id="imeiDiv">
+							<p th:if="${confirmationMessage}" class="alert alert-success"
+								role="alert" th:text="${confirmationMessage}"></p>
+							<p th:if="${failedMessage}" class="alert alert-danger"
+								role="alert" th:text="${failedMessage}"></p>
+							<p th:if="${warningMessage}" class="alert alert-warning"
+								role="alert" th:text="${warningMessage}"></p>
+							<p th:if="${notFoundMessage}" class="alert alert-warning"
+								role="alert" th:text="${notFoundMessage}"></p>
+							<div class="row">
+								<div class="mx-auto form-group ">
+									<label for="imei">Por favor ingresa el número correspondiente al IMEI de tu equipo: </label> 
+									<input type="text" class="form-control" th:field="*{imei}"
+										placeholder="15 dígitos ej. 123456106543211" minlength="15" maxlength="15" required="required">
+									<p class="text-danger" th:if="${#fields.hasErrors('imei')}"
+										th:errors="*{imei}"></p>
+								</div>
+							</div>
+						</div>
+						<div th:if="*{compatible}">
+							<a th:href="*{compatibleOptUrl}" target="_blank">
+								<h5>Contrata Aqui</h5>
+							</a>
+						</div>
+						<div th:if="*{noCompatible}">
+							<a th:href="*{noCompatibleOptUrl}" target="_blank">
+								<h5>Revisar nuestros planes alternativos</h5>
+							</a>
+						</div>
+						<div th:if="*{!voiceApp}">
+							<h6 class="card-title text-center">¿Cómo obtener tu IMEI?</h6>
+							<p>Para obtener el número de IMEI de tu teléfono celular
+								marca *#06# o también se puede encontrar en una etiqueta blanca
+								debajo de la batería de tu dispositivo.</p>
+						</div>
+						<div class="row" th:if="*{voiceApp}">
+							<div class="row">
+								<a th:href="*{compatibleOptUrl}" target="_blank">
+									<h5>Contrata Aqui</h5>
+								</a>
+							</div>
+							<div class="row">
+								<h5>Descarga el app</h5>
+								<div class="col">
+									<a th:href="*{googleplayUrl}" target="_blank"><img
+										th:src="@{/images/gooplay.png}" alt="googleplay>"
+										class="img-responsive"></a>
+								</div>
+								<div class="col">
+									<a th:href="*{vozappUrl}" target="_blank"><img
+										th:src="@{/images/vozappQR.png}" alt="vozappQR"
+										class="img-responsive"></a>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div>
+								<br>
+								<div class="row justify-content-center">
+									<button type="submit" class="btn btn-primary">Validar</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- </div> -->
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-4 mx-auto">
+					<br>
+					<br> <img th:src="@{/images/compatibilty.png}"
+						class="img-responsive" alt="Comptabilidad">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal"></div>
+	<div th:insert="fragments/layout :: footer" class="fixed-bottom"></div>
+</body>
+<script th:src="@{/script/util.js}"></script>
+
+</html>

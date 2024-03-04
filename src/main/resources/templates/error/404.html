@@ -1,0 +1,36 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+<title>Página No Encontrada</title>
+</head>
+<body>
+	<div class="container">
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="portlet light">
+
+					<div class="portlet-title">
+						<!-- BEGIN PAGE TITLE-->
+						<h1 class="page-title">Página No Encontrada</h1>
+						<!-- END PAGE TITLE-->
+						<!-- END PAGE HEADER-->
+						<div class="row">
+							<div class="col-md-12 page-404">
+								<div class="details">
+									<p>Lo sentimos, no podemos encontrar la página que está
+										buscando.</p>
+									<p>
+										<a href="/">Inicio </a>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div th:insert="fragments/layout :: footer" class="fixed-bottom"></div>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+
+</head>
+<body lang="en" class="article">
+<div th:insert="fragments/layout :: generalHeader" class="fixed-top"></div>
+<br>
+<div class="container">
+    <form id="form-horizontal" th:action="@{/recharge/expressPlusRechargePayment/}"
+          th:object="${paymentForm}" th:method="POST" method="POST"
+          action="register">
+        <div class="row mt-5">
+            <div class="card col-xs-12 col-sm-8 col-md-8 col-lg-8 mx-auto">
+
+                <p id="errorMessage" class="alert alert-danger" role="alert"
+                   style="display: none;"></p>
+                <p th:if="${failedMessage}" class="alert alert-danger"
+                   role="alert" th:text="${failedMessage}"></p>
+                <div>
+                    <ul class="global-errors mt-5" th:if="${#fields.hasErrors('global')}">
+                        <li class="text-danger"
+                            th:each="err : ${#fields.errors('global')}" th:text="${err}"></li>
+                    </ul>
+                    <div class="form-group mt-5">
+                        <div class="container mt-5">
+                            <h4>Opciones de pago</h4>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-check">
+                                                <label class="form-check-label"> <input
+                                                        type="radio" class="form-check-input" name= "paymentMehod" th:field="*{paymentMethod}" value="card"><h6>Tarjetas de crédito o débito </h6>
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check">
+                                                <label class="form-check-label"> <input
+                                                        type="radio" class="form-check-input" name= "paymentMehod"  th:field="*{paymentMethod}" value="Stripe" ><h6>Si tu pago no fue procesado intenta con esta opción de tarjeta de crédito o débito</h6>
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col">
+                                            <img th:src="@{/images/credit_card_payment_conekta.png}"
+                                                 class="img-responsive" alt="Tarjeta de crédito">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-check">
+                                                <label class="form-check-label"> <input
+                                                        type="radio" class="form-check-input" name= "paymentMehod"  th:field="*{paymentMethod}" value="OxxoPay" ><h6>Paga en efectivo en OXXO</h6>
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col">
+                                            <img th:src="@{/images/oxxo.png}" class="img-responsive"
+                                                 alt="Pago en oxxo">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="form-check">
+                                                <label class="form-check-label"> <input
+                                                        type="radio" class="form-check-input" name= "paymentMehod"  th:field="*{paymentMethod}" value="Paynet" ><h6>Paga en tiendas Paynet</h6>
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-9">
+                                            <img th:src="@{/images/paynet.png}" class="img-responsive"
+                                                 alt="Pago paynet">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+										<div class="row">
+											<div class="col-3">
+												<div class="form-check">
+													<label class="form-check-label"> <input
+														type="radio" class="form-check-input" name= "paymentMehod"  th:field="*{paymentMethod}" value="CoppelPay" ><h6>Paga con Coppel Pay</h6>
+													</label>
+												</div>
+												
+											</div>
+											<div class="col-9">
+												<img th:src="@{/images/logocoppel.png}" class="img-responsive"
+													alt="Pago Coppel Pay">
+											</div>
+										</div>
+									</li>
+
+                            </ul>
+                        </div>
+                        <input type="hidden" th:field="*{fromViewUrl}">
+                        <br>
+                        <div class="form-group bg-light text-dark">
+                            <div class="checkbox">
+                                <label><input type="checkbox"
+                                              id="termsAndConditionsChbx" required="required" /> He leído y
+                                    acepto los <a href="https://shop.tiendaturbored.com/shop/terms" target="_blank"><b>Terminos
+                                        y condiciones de uso del servicio* </b></a> </label>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <button type="submit" class="btn btn-primary">Pagar</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div class="modal"></div>
+<div th:insert="fragments/layout :: footer" class="fixed-bottom"></div>
+</body>
+<script th:src="@{/script/util.js}"></script>
+</html>

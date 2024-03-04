@@ -1,0 +1,75 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+
+</head>
+<body lang="es" style="font-size: 18px;">
+	<div th:insert="fragments/layout :: generalHeader" class="fixed-top"></div>
+	<br>
+	<div class="container">
+		<div>
+			<br>
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mx-auto">
+					<!-- <div class="card-body"> -->
+
+					<form th:action="@{/apnChange/}" th:method="post" method="post"
+						th:object="${apnChangeForm}">
+						<h4 class="text-center">Configura tu APN por SMS.</h4>
+						<hr>
+						<br>
+						<div id="imeiDiv">
+							<p th:if="${confirmationMessage}" class="alert alert-success"
+								role="alert" th:text="${confirmationMessage}"></p>
+							<p th:if="${failedMessage}" class="alert alert-danger"
+								role="alert" th:text="${failedMessage}"></p>
+							<p th:if="${warningMessage}" class="alert alert-warning"
+								role="alert" th:text="${warningMessage}"></p>
+							<div class="row">
+								<div class="mx-auto form-group ">
+									<label for="imei">Por favor ingresa tu número
+										mobil Turbored: </label> 
+									<input
+										class="form-control"
+										type="text" autocomplete="off" 
+										placeholder="Número celular a 10 dígitos ej. 5586410100" 
+										minlength="10" maxlength="10" required 
+										th:field="*{cellphoneNumber}"
+									/>
+
+									<p class="text-danger" th:if="${#fields.hasErrors('cellphoneNumber')}"
+										th:errors="*{cellphoneNumber}"></p>
+								</div>
+							</div>
+						</div>
+						<div th:if="*{message}">
+							<h6 class="card-title text-center">
+								“En breve recibirás un SMS con las configuraciones necesarias
+								para que puedas navegar con tu equipo y disfrutes de la mejor
+								conexión.
+								</h6>
+						</div>
+						<div>
+							<div>
+								<br>
+								<div class="row justify-content-center">
+									<button type="submit" class="btn btn-primary">Enviar</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- </div> -->
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-4 mx-auto">
+					<br>
+					<br> <img th:src="@{/images/apn_chane.jpg}"
+						class="img-responsive" alt="Apn">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal"></div>
+	<div th:insert="fragments/layout :: footer" class="fixed-bottom"></div>
+</body>
+<script th:src="@{/script/util.js}"></script>
+
+</html>

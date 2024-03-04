@@ -1,0 +1,74 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+</head>
+<body lang="es">
+<div th:insert="fragments/layout :: generalHeader" class="fixed-top"></div>
+<div class="container">
+    <br>
+    <div align="right">
+        <a th:href="@{/logout}" class="btn btn-light">Cerrar sesión</a>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12  col-md-12  col-lg-12  mx-auto">
+            <!-- <div class="card-body"> -->
+
+            <form th:action="@{/adminTurboOffice/paymentLink}" th:method="post" method="post"
+                  th:object="${turboOfficePaymentForm}">
+                <h4 class="text-center">Link de Pago</h4>
+                <hr>
+                <br>
+                <div id="">
+                    <p th:if="${confirmationMessage}" class="alert alert-success"
+                       role="alert" th:text="${confirmationMessage}"></p>
+                    <p th:if="${failedMessage}" class="alert alert-danger"
+                       role="alert" th:text="${failedMessage}"></p>
+                    <p th:if="${warningMessage}" class="alert alert-warning"
+                       role="alert" th:text="${warningMessage}"></p>
+                    <p th:if="${notFoundMessage}" class="alert alert-warning"
+                       role="alert" th:text="${notFoundMessage}"></p>
+                    <div class="row">
+                        <div class="col-12  form-group ">
+                            <label for="link">Ingresa el link de pago: </label>
+                            <input type="text" class="form-control" th:field="*{link}"
+                                   required="required">
+                            <p class="text-danger" th:if="${#fields.hasErrors('link')}"
+                               th:errors="*{link}"></p>
+                        </div>
+                        <div class="col-12  form-group ">
+                            <label for="msisdn">Ingresa el número de celular: </label>
+                            <input type="text" class="form-control" th:field="*{msisdn}"
+                                   placeholder="10 dígitos ej. 1234561065" minlength="1" maxlength="10" required="required">
+                            <p class="text-danger" th:if="${#fields.hasErrors('msisdn')}"
+                               th:errors="*{msisdn}"></p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div>
+                    <div class="col-12 ">
+                        <br>
+                        <div class="row justify-content-center">
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+
+
+
+<div class="modal"></div>
+<div th:insert="fragments/layout :: footer" class="fixed-bottom"></div>
+</body>
+<script th:src="@{/script/util.js}"></script>
+<script th:src="@{/script/toffice/admin.js}"></script>
+
+
+</html>

@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+<body lang="es" style="font-size:18px;">
+	<div th:insert="fragments/layout :: header" class="fixed-top"></div>
+	<br>
+	<div class="container" style="margin-top: 20px;">
+
+		<div class="row">
+			<div class="card col-xs-12 col-sm-12 col-md-6 col-lg-6 mx-auto"
+				style="margin-top: 5px;">
+				<div class="card-body">
+					<h4 class="text-center">Descarga el detalle de tu consumo</h4>
+					<hr>
+				</div>
+				<div class="card-body">
+					<div class="form-group">
+						<label>Selecciona el mes: </label> 
+						<select id="monthYear"
+							class="form-control" required="required">
+							<option th:each="month : ${lastMonthsList}"
+								th:value="${month.monthYear}" th:text="${month.monthYearStr}" />
+						</select> <br>
+						<div class="row justify-content-center">
+							<button type="button" class="btn btn-primary" id="download_btn"
+								th:text=#{download.button}></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+	</div>
+	<div th:insert="fragments/layout :: footer" class="fixed-bottom"></div>
+</body>
+<script th:src="@{/script/consumption/detailView.js}" type="text/javascript"></script>
+</html>
+

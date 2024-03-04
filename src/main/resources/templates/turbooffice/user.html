@@ -1,0 +1,299 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+</head>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/dataTables.min.js}"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<body lang="es">
+	<div th:insert="fragments/layout :: generalHeader" class="fixed-top"></div>
+	<div class="container">
+		<br>
+		<div align="right">
+			<a th:href="@{/logout}" class="btn btn-light">Cerrar sesión</a>
+		</div>
+		<h3 class="text-center">Detalle de usuario</h3>
+		<p id="errorMessage" class="alert alert-danger" role="alert" style="display: none;"></p>
+		<p id="confirmationMessage" class="alert alert-success" role="alert" style="display: none;"></p>
+		<div class="row">
+			<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 mx-auto">
+				<div class="card">
+					<div class="row card-header text-white"
+						style="background-color: #78BE21;">
+						<div class="col-6">
+							<h5 th:text=${turboOfficeUserModel.fullName}></h5>
+						</div>
+						<div class="col-6" align="right">
+							<div class="btn-group" role="group"
+								aria-label="Button group with nested dropdown">
+								<!-- <h6 th:text=${turboOfficeUserModel.fullName}></h6> -->
+								<h6></h6>
+								<div class="btn-group" role="group">
+									<button id="btnGroupDrop1" type="button"
+										class="btn btn-secondary dropdown-toggle"
+										data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false">Acciones</button>
+									<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+										<!-- <a class="dropdown-item" href="#" onclick="getPaymentLink()">Generar
+											link de pago</a> -->
+										<button id ="identityBtn" type="button" class="btn dropdown-item"
+											data-toggle="modal" data-target="#myIdentityModal">Validar identidad</button>
+										<button id = "myDeleteButton" type="button" class="btn dropdown-item"
+											data-toggle="modal" data-target="#myDeleteModal">Dar
+											de baja</button>
+										<button id = "myUnlockButton" type="button" class="btn dropdown-item" data-toggle="modal" data-target="#myUnlockModal">Desbloquear(App
+											acrobits)</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-xs-8 col-sm-3 col-md-3 col-lg-3 mx-auto">
+
+								<div align="center">
+									<img class="card-img-top" th:src="@{/images/user.png}"
+										alt="Card image" style="width: 40%">
+									<p th:text=${turboOfficeUserModel.virtualNumber}></p>
+									<p>
+										<b>Numero virtual</b>
+									</p>
+								</div>
+							</div>
+							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4 mx-auto">
+								<p>
+									<b>Número asociado:</b>
+								</p>
+								<hr>
+								<p>
+									<b>Correo:</b>
+								</p>
+								<hr>
+								<p>
+									<b>Servicio:</b>
+								</p>
+								<hr>
+								<p>
+									<b>Activación:</b>
+								</p>
+								<hr>
+								<p>
+									<b>Ultimo pago:</b>
+								</p>
+								<hr>
+								<p>
+									<b>Fecha de corte:</b>
+								</p>
+								<hr>
+								<p>
+									<b>Total minutos periodo actual:</b>
+								</p>
+								<hr>
+								<p>
+									<b>Total minutos del plan:</b>
+								</p>
+								<hr>
+								<p>
+									<b>Total minutos adicionales(recarga):</b>
+								</p>
+								<hr>
+								<p>
+									<b>Minutos consumidos</b>
+								</p>
+								<hr>
+								<p>
+									<b>Minutos disponibles</b>
+								</p>
+								<hr>
+								<p>
+									<b>Acrobits status</b>
+								</p>
+								<p>
+									<b>Acrobits(bloqueado)</b>
+								</p>
+								<hr>
+							</div>
+							<div class="col-xs-6 col-sm-5 col-md-5 col-lg-5 mx-auto">
+								<p th:text=${turboOfficeUserModel.associatedNumber}></p>
+								<hr>
+								<p th:text=${turboOfficeUserModel.email}></p>
+								<hr>
+								<p th:text=${turboOfficeUserModel.turboOfficePlanName}></p>
+								<hr>
+								<p th:text=${turboOfficeUserModel.createdAt}></p>
+								<hr>
+								<p th:text=${turboOfficeUserModel.lastPaymentAt}></p>
+								<hr>
+								<p th:text=${turboOfficeUserModel.expiredAt}></p>
+								<hr>
+								<p th:text=${turboOfficeUserModel.totalPeridoMinutes}></p>
+								<hr>
+								<p th:text=${turboOfficeUserModel.totalPlanMinutes}></p>
+								<hr>
+								<p
+									th:text=${turboOfficeUserModel.totalExtraRechargeTotalMinutes}></p>
+								<hr>
+								<p th:text=${turboOfficeUserModel.totalConsumedMinutes}></p>
+								<hr>
+								<p th:text=${turboOfficeUserModel.totalAvailableMinutes}></p>
+								<hr>
+								<p th:text=${turboOfficeUserModel.acrobitsStatus}></p>
+								<hr>
+								<p  th:text=${turboOfficeUserModel.acrobitsLockedStatus}></p>
+								<hr>
+							</div>
+							<input type="hidden" id="virtual_number" 
+								th:field="${turboOfficeUserModel.virtualNumber}" /> <br>
+							<input type="hidden" id="acrobitsLockedStatus" 
+								th:field="${turboOfficeUserModel.acrobitsLockedStatus}" /> <br>
+								
+							<!-- <div class="card-footer" align="center">
+								<div align="center">
+									<button type="button" id="callDetailButton" class="btn btn-outline-primary">Detalle
+										de llamadas</button>
+									<button type="button" class="btn btn-outline-primary">Generar
+										link de pago</button>
+									<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#myDeleteModal">Dar
+										de baja</button>
+								</div>
+							</div> -->
+						</div>
+
+					</div>
+
+					<div class="card-footer" align="center">
+						<div class="row">
+							<div class="col-6">
+								<div class="form-group ">
+									<label>Periodos pagados</label> <select class="form-control"
+										id="turboOfficeUserPlanDetailId">
+										<option th:each="detail : ${turboOfficeUserModel.planDetails}"
+											th:value="${detail.turboOfficeUserPlanDetailId}"
+											th:text="${detail.period}" />
+									</select>
+								</div>
+							</div>
+							<div class="col-6">
+								<div align="center">
+									<br>
+									<button type="button" id="callDetailButton"
+										class="btn btn-primary">Ver detalle</button>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div id="callDetailsDiv">
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Buscar"
+							id="myTableSearch">
+						<div class="input-group-append">
+							<button class="btn btn-primary" type="button" disabled>
+								<i class="fa fa-search"></i>
+							</button>
+						</div>
+					</div>
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover order-column "
+							id="callDetails">
+							<thead>
+								<tr>
+									<th>Destino</th>
+									<th>Minutos</th>
+									<th>Inicio</th>
+									<th>Fin</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+				<br>
+			</div>
+		</div>
+	</div>
+	<!-- The delete Modal -->
+	<div class="modal fade" id="myDeleteModal">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header text-white"
+					style="background-color: #78BE21;">
+					<h4 class="modal-title">Baja de usuario</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<!-- Modal body -->
+				<div class="modal-body">Confirmar baja al usuario</div>
+				<!-- Modal footer -->
+				<div class="modal-footer align-self-center">
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						onclick="deleteUser()">Aceptar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- The unblock user Modal -->
+	<div class="modal fade" id="myUnlockModal">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header text-white"
+					style="background-color: #78BE21;">
+					<h4 class="modal-title">Desbloquedo  de usuario(App)</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<!-- Modal body -->
+				<div class="modal-body">Confirmar desbloquedo de usuario(App)</div>
+				<!-- Modal footer -->
+				<div class="modal-footer align-self-center">
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						onclick="unlockAppUser()">Aceptar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- The unblock user Modal -->
+	<div class="modal fade" id="myIdentityModal">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content" >
+				<!-- Modal Header -->
+				<div class="modal-header text-white"
+					style="background-color: #78BE21;">
+					<h4 class="modal-title">Validar identidad</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<div class="card-body">
+					<button id = "validateIdentityBtn" type="button" class="btn btn-primary btn-block" onclick="sendValidationCode()">Enviar codigo </button>
+					<br>
+					<div id="codeDiv" >
+							<div class="row">
+								<div
+									class="form-group ">
+									<label for="virtualNumber">Ingresar código enviado al usuario</label>
+									<input type="text" class="form-control"
+										placeholder="Código Ej. 787678"
+										minlength="6" maxlength="6" required="required" id = "validationCode">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			<!-- Modal footer -->
+				<div class="modal-footer align-self-center">
+					<button id ="validateIdentityCodeBtn"   type="button" class="btn btn-primary" data-dismiss="modal"
+						onclick="validateIdentityCode()">Aceptar</button>
+				</div>	
+				
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal"></div>
+	<div th:insert="fragments/layout :: footer" class="fixed-bottom"></div>
+</body>
+<script th:src="@{/script/util.js}"></script>
+<script th:src="@{/script/toffice/user.js}"></script>
+</html>

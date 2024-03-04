@@ -1,0 +1,83 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+	      
+</head>
+<body lang="es">
+	<div th:insert="fragments/layout :: header" class="fixed-top"></div>
+	<div class="container">
+		<br>
+		<br>
+		<div id="header">
+			<h5>Bienvenido  <span th:text="${session.user.name} + ' ' + ${session.user.lastName}"></span>
+			</h5>
+			<br> 
+		</div>
+		<br>
+		<div class="card">
+			<div class="card-body">
+				<h4 class="pt-3 text-center"><span id="offerName"></span></h4>
+				<h5 class="pt-3 text-center"><span id="effectiveDate"></span></h5>
+				<h5 class="pt-3 text-center"><span id="expireDate"></span></h5>
+				
+				
+				<hr>
+			</div>
+			<div class="card-body">
+				<div class="row justify-content-center">
+						<div class=" col-xs-8 col-sm-3 col-md-3 col-lg-3">
+							<div class="row justify-content-center">
+								<span>MB</span>
+							</div>
+							<div class="row justify-content-center">
+								<canvas id="dataChart"></canvas>
+							</div>
+							<div class="row justify-content-center">
+								<span id = "dataConsumed"></span>
+							</div>
+							<div class="row justify-content-center">
+								<span id = "dataAvailable"></span>
+							</div>
+							<br>
+						</div>
+					<div class=" col-xs-8 col-sm-3 col-md-3 col-lg-3">
+						<div class="row justify-content-center">
+							<span>MENSAJES</span>
+						</div>
+						<div class="row justify-content-center">
+							<canvas id="smsChart"></canvas>
+						</div>
+						<div class="row justify-content-center">
+							<span id="smsConsumed"></span>
+						</div>
+						<div class="row justify-content-center">
+							<span id="smsAvailable"></span>
+						</div>
+						<br>
+					</div>
+					<div class=" col-xs-8 col-sm-3 col-md-3 col-lg-3">
+						<div class="row justify-content-center">
+							<span>MINUTOS</span>
+						</div>
+						<div class="row justify-content-center">
+							<canvas id="voiceChart"></canvas>
+						</div>
+						<div class="row justify-content-center">
+							<span id="voiceConsumed"></span>
+						</div>
+						<div class="row justify-content-center">
+							<span id="voiceAvailable"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div class="modal"></div>
+	<div th:insert="fragments/layout :: footer" class="fixed-bottom"></div>
+</body>
+<script th:src="@{/js/Chart.min.js}"></script>
+<script th:src="@{/script/consumption/balance.js}"></script>
+<script th:src="@{/script/util.js}"></script>
+
+</html>

@@ -1,0 +1,114 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+<body lang="es">
+	<div th:insert="fragments/layout :: generalHeader" class="fixed-top"></div>
+	<div class="container">
+		<br>
+		<!-- 		<div class="row justify-content-left">
+			<a th:href="@{https://www.turbored.com/internet-hogar-y-negocios}">
+				<img th:src="@{/images/left.png}" style="width: 50" alt="Regresar">
+			</a>
+		</div> -->
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mx-auto">
+				<div>
+					<h4 class="card-title text-center">Verifica la cobertura de
+						Internet Hogar en tu domicilio</h4>
+					<hr>
+				</div>
+				<div>
+					<form th:action="@{/coverage/validateCoverage/}"
+						th:object="${validateCoverageForm}" th:method="post" method="post">
+						<ul class="global-errors" th:if="${#fields.hasErrors('global')}">
+							<li class="text-danger"
+								th:each="err : ${#fields.errors('global')}" th:text="${err}">Input
+								is incorrect</li>
+						</ul>
+						<div class="form-group">
+							<label for="address">Domicilio:</label> <input type="text"
+								class="form-control" id="address" th:field="*{address}"
+								placeholder="" maxlength="100">
+							<p class="text-danger" th:if="${#fields.hasErrors('address')}"
+								th:errors="*{address}"></p>
+						</div>
+						<div class="form-group">
+							<label for="zipcode">Código postal:</label> <input type="text"
+								class="form-control" id="zipcode" th:field="*{zipcode}"
+								placeholder="" maxlength="5">
+							<p class="text-danger" th:if="${#fields.hasErrors('zipcode')}"
+								th:errors="*{zipcode}"></p>
+						</div>
+						<div class="form-group">
+							<label for="zipcode">Si conoces tus coordenadas
+								ingresalas para mayor exactitud :</label>
+						</div>
+						<div class="form-inline">
+							<input type="text" class="form-control" id="coordinates"
+								th:field="*{coordinates}" placeholder="Latitud, Longitud"
+								maxlength="30">
+							<p class="text-danger"
+								th:if="${#fields.hasErrors('coordinates')}"
+								th:errors="*{coordinates}"></p>
+						</div>
+						<br>
+						<div class="row justify-content-center">
+							<button type="submit" class="btn btn-primary"
+								id="validate_coverage_btn">Validar cobertura</button>
+						</div>
+						<input type="hidden" id="origin" th:field="*{origin}"/>
+					</form>
+					<div class="row justify-content-center">
+						<span th:text="${validateCoverageForm.foundAddress}"></span>
+					</div>
+					<div th:if="${validateCoverageForm.coverageList != null}"
+						class="row justify-content-center">
+						<h4 th:text="${validateCoverageForm.coverageMessage}"></h4>
+						<br>
+						<br>
+						<div class="row justify-content-center">
+							<div class="table-responsive">
+								<table class="table">
+									<thead>
+										<tr>
+											<th style="text-align: center;">Velocidad</th>
+											<th style="text-align: center;">Plan</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="coverage : ${validateCoverageForm.coverageList}"
+											style="text-align: center;">
+											<td th:text="${coverage.speed}">
+												<div align="center"></div>
+											</td>
+											<td style="text-align: center;"><a
+												th:href="@{${coverage.planUrl}}"
+												class="btn btn-outline-success" role="button"
+												th:text="${coverage.planName}"></a>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!-- 					<div class="row justify-content-center">
+						<ul>
+							<li
+								th:each="message : ${validateCoverageForm.coverageValidationMessages}"
+								th:text="${message}">
+								<a>hola</a>
+								</li>
+						</ul> 
+					</div> -->
+					<br> <span>Para realizar tu contratación favor de
+						comunicarte al centro de atención Tel. </span> <span
+						th:text="${validateCoverageForm.callcenterPhone}"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal"></div>
+	<div th:insert="fragments/layout :: footer" class="fixed-bottom"></div>
+</body>
+<script th:src="@{/script/util.js}"></script>
+</html>
+

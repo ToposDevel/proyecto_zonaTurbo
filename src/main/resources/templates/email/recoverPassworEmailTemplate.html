@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:remove="all"></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body style=" margin: 10%; font-size: 20px;">
+	<div th:insert="email/emailLayout :: header" class="fixed-top"></div>
+	<p>Para completar el proceso de restablecimiento de contraseña, por
+		favor da click en el siguiente link:</p>
+		<div style="text-align: center">
+			<a th:href="@{''+ ${token}}" style="color: #1a1a1a;"><b>Restablecer</b></a>
+		</div>
+	
+	<br>
+	<br>
+	<div th:insert="email/emailLayout :: footer" class="fixed-top"></div>
+</body>
+</html>

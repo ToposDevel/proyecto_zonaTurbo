@@ -1,0 +1,235 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+	      
+</head>
+<body lang="es" style="font-size:18px;">
+	<div th:insert="fragments/layout :: generalHeader" class="fixed-top"></div>
+	<br>
+	<br>
+	<div class="container">
+		<div class="row">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mx-auto">
+			<div >
+				<div class="row">
+					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 mx-auto">
+						
+						<h4 class="text-center">¡Ahorra tu tiempo!</h4>
+						<h4 class="text-center">Domicilia tu pago y olvidate de los molestos pagos.</h4>
+						<!-- <h6 id="movDiv" class="text-center">Movilidad</h6> -->
+						<!-- <h6 id="hbbMifiDiv" class="text-center">HBB y MIFI</h6> -->
+						<p th:if="${confirmationMessage}" id= "confirmationMessage" class="alert alert-success"
+							role="alert" th:text="${confirmationMessage}"
+							style="display: none;"></p>
+					</div>
+				</div>
+				<hr>
+			</div>
+			<p id="errorMessage" class="alert alert-danger" role="alert" style="display: none;"></p>
+			<div class="card-body">
+				<form id="card-form" th:action="@{/conekta/subscription/}"
+					th:object="${suscriptionModel}" th:method="post" method="post"
+					action="register">
+					<ul class="global-errors" th:if="${#fields.hasErrors('global')}">
+						<li class="text-danger"
+							th:each="err : ${#fields.errors('global')}" th:text="${err}">Input
+							is incorrect</li>
+					</ul>
+					<div id="cellphoneNumberDiv" style="display: none;">
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mx-auto form-group ">
+								<label for="CellphoneNumber">Telefono celular Turbored *</label>
+								<input type="text" class="form-control"
+									th:field="*{cellphoneNumber}" id="cellphoneNumber"
+									placeholder="10 digitos ej. 5586410100"
+									maxlength="10" required="required">
+								<p class="text-danger"
+									th:if="${#fields.hasErrors('cellphoneNumber')}"
+									th:errors="*{cellphoneNumber}"></p>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mx-auto form-group ">
+								<label for="cellphoneNumberConfirmation">Confirmar
+									numero *</label> <input type="text" class="form-control"
+									th:field="*{cellphoneNumberConfirmation}"
+									id="cellphoneNumberConfirmation"
+									placeholder="10 digitos ej. 5586410100"
+									maxlength="10">
+								<p class="text-danger"
+									th:if="${#fields.hasErrors('cellphoneNumberConfirmation')}"
+									th:errors="*{cellphoneNumberConfirmation}"></p>
+							</div>
+						</div>
+					</div>
+					<div id="imeiDiv" style="display: none;">
+						<div class="row">
+							<div
+								class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mx-auto form-group ">
+								<label for="imei">IMEI *</label> <input type="text"
+									class="form-control" th:field="*{imei}"
+									placeholder="15 dígitos ej. 123456106543211"
+									maxlength="15">
+								<p class="text-danger" th:if="${#fields.hasErrors('imei')}"
+									th:errors="*{imei}"></p>
+							</div>
+							<div
+								class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mx-auto form-group ">
+								<label for="imeiConfirmation">Confirmar IMEI
+									*</label> <input type="text" class="form-control"
+									th:field="*{imeiConfirmation}" id="imeiConfirmation"
+									placeholder="15 dígitos ej. 123456106543211"
+									maxlength="15">
+								<p class="text-danger"
+									th:if="${#fields.hasErrors('imeiConfirmation')}"
+									th:errors="*{imeiConfirmation}"></p>
+							</div>
+						</div>
+						<div >
+							<div class="form-group">
+							<span class="label success">Numero asociado:</span>
+							<b><span class="label success" id="imeicellphoneNumber" ></span></b>
+							</div>						
+						</div>
+					</div>
+					<div class="form-group ">
+						<div class="form-group ">
+							<label>Seleccionar el Plan al que desea Suscribirse: *</label>
+							<select class="form-control" id="planSelectedId" th:field="*{planSelectedId}" onchange="validateSuperOfferType()">
+								<option value="select"></option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group bg-light text-dark">
+						<div class="checkbox">
+							<label> <input type="checkbox"
+								id="termsAndConditionsChbx" /> He leido y acepto los <a
+								href="https://www.turbored.com/terminos"><b>Terminos y
+										condiciones de uso del servicio* </b></a>
+							</label>
+						</div>
+					</div>
+					<input type="hidden" id="tokenId" th:field="*{tokenId}" />
+					<input type="hidden" id="cardTitularName" th:field="*{cardTitularName}" />
+					<input type="hidden" id="email" th:field="*{email}" />
+					<input type="hidden" id="suscriptionWithImei" th:field="*{suscriptionWithImei}" />
+					<input type="hidden" id="belongsToHhb" th:field="*{belongsToHhb}" />
+					<input type="hidden" id="internalOperation" th:field="*{internalOperation}" />
+					<input type="hidden" id="superOfferType" th:field="*{superOfferType}" />
+				</form>
+				<div class="row justify-content-center align-self-center">
+					<button type="button" class="btn btn-primary"
+						onclick="validateMainDataForm()" data-toggle="modal">Aceptar</button>
+				</div>
+
+				<!-- Modal -->
+				<div class="modal fade" id="cardDataModal" role="dialog">
+					<div class="modal-dialog modal-dialog-centered">
+						<!-- Modal content-->
+						<div class="modal-content">
+								<div class="modal-header">
+									<div class="row">
+										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 mx-auto">
+											<img th:src="@{/images/tarjetas.png}" class="img-responsive">
+										</div>
+										<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 mx-auto">
+											<h4 class="text-center">Domiciliar pago</h4>
+											<p th:if="${confirmationMessage}" class="alert alert-success"
+												role="alert" th:text="${confirmationMessage}"
+												style="display: none;"></p>
+										</div>
+									</div>
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<!-- <h4 class="modal-title">Cerrar</h4> -->
+								</div>
+								<p id="errorMessageCard" class="alert alert-danger" role="alert"></p>
+								<div class="modal-body">
+									<div class="form-group ">
+										<div class="form-group">
+											<label> Nombre del titular </label> <input type="text"
+												class="form-control" id="cardTitName" maxlength="50"
+												placeholder="Nombre como aparece en la tarjeta" required="required" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label> Número de tarjeta </label> <input type="text"
+											class="form-control" id="cardNumber" minlength="16"
+											maxlength="16" placeholder="**** **** **** ****"
+											pattern="[0-9]{16}" required="required" />
+									</div>
+									<div class="row">
+										<div class="col-xs-10 col-sm-5 col-md-5 col-lg-5 mx-auto">
+											<label> Fecha de expiracion </label>
+											<div class="row">
+												<div class="col-6">
+													<input type="text" class="form-control"
+														id="cardExpiredMonth" minlength="2" maxlength="2"
+														pattern="[0-9]{2}" placeholder="Mes" required="required" />
+												</div>
+												<div class="col-6">
+													<input type="text" class="form-control"
+														id="cardExpiredYear" minlength="4" maxlength="4"
+														pattern="[0-9]{4}" placeholder="Año" required="required" />
+												</div>
+											</div>
+										</div>
+										<div class="col-xs-10 col-sm-7 col-md-7 col-lg-7 mx-auto">
+											<div class="form-group">
+												<div class="row">
+													<div class="col-10">
+														<label> Código de seguridad </label>
+													</div>
+													<div class="col-2">
+														<a href="#" data-toggle="tooltip" data-placement="top"
+															title="Código de seguridad que se encuentra al reverso de tu tarjeta">
+															<img th:src="@{/images/question_blue.jpg}">
+														</a>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-4">
+														<input type="password" class="form-control" id="cardCvv"
+															minlength="3" maxlength="3" pattern="[0-9]{3}"
+															placeholder="cvv" required="required" />
+													</div>
+													<div class="col-8">
+														<img th:src="@{/images/cvc.jpg}">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-8">
+											<div class="form-group">
+												<label for="Email" th:text="#{user.email.input}"></label> <input
+													type="email" class="form-control" 
+													id="e-mail" placeholder="" maxlength="50"
+													required="required">
+											</div>
+										</div>
+										<div class="col-4">
+											<br>
+											<div class="row justify-content-center align-self-center">
+												<button type="button" onclick="createToken()"
+													class="btn btn-primary">Aceptar</button>
+											</div>
+										</div>
+									</div>
+								</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mx-auto">
+				<img th:src="@{/images/cellphone_hand_man_ch.png}" class="img-responsive"
+						alt="Simcard Gift">
+				</div>
+		</div>
+	</div>
+	<div class="modal"></div>
+	<div th:insert="fragments/layout :: footer" class="fixed-bottom"></div>
+</body>
+<script type="text/javascript"
+	src="https://cdn.conekta.io/js/latest/conekta.js"></script>
+<script th:src="@{/script/util.js}"></script>
+<script th:src="@{/script/conekta/subscription/subscription.js}"></script>
+</html>

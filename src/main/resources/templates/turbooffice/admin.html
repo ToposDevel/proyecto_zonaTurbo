@@ -1,0 +1,68 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+</head>
+<body lang="es">
+	<div th:insert="fragments/layout :: generalHeader" class="fixed-top"></div>
+	<div class="container">
+		<br>
+		<div align="right">
+			<a th:href="@{/logout}" class="btn btn-light">Cerrar sesión</a>
+		</div>
+		<br>
+		<div class="row col-6">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mx-auto">
+			<h3 class="text-center">Turbo Office ADMIN</h3>
+			</div>
+			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 mx-auto">
+			<img
+				th:src="@{/images/turbo_office.jpg}" class="img-responsive" 
+				alt="Activacion Turbo office">
+		</div>
+		</div>
+		<h3 class="text-center">Usuarios Turbo Office</h3>
+				<p th:if="${confirmationMessage}" id="confirmationMessage"
+			class="alert alert-success" role="alert"
+			th:text="${confirmationMessage}"></p>
+		<p th:if="${errorMessage}" id="errorMessage"
+			class="alert alert-danger" role="alert"
+			th:text="${errorMessage}"></p>
+		<p>Escribe un dato para realizar tu búsqueda:</p>
+		<input class="form-control" id="myInput" type="text"
+			placeholder="Buscar.."> <br>
+		<table class="table table-bordered table-striped" id="turboOfficeUsers">
+			<thead>
+				<tr>
+					<th>Servicio</th>
+					<th>Número asociado</th>
+					<th>Número Virtual</th>
+					<th>Estatus</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody id="myTable">
+				<tr th:each="user : ${turboOfficeAdminModel.turboOfficeUsers}" >
+					<td th:text="${user.turboOfficePlanName}"></td>
+					<td th:text="${user.associatedNumber}"></td>
+					<td th:text="${user.virtualNumber}"></td>
+					<td th:text="${user.turboOfficeStatus}"></td>
+				 	<td>
+				 		<div th:if="${user.virtualNumber != null and user.virtualNumber != ''}">
+				 			<a th:href="@{'/adminTurboOfficeUser/' + ${user.virtualNumber}}">Ver</a>
+				 		</div>
+				 		
+				 	</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	
+	
+	<div class="modal"></div>
+	<div th:insert="fragments/layout :: footer" class="fixed-bottom"></div>
+</body>
+<script th:src="@{/script/util.js}"></script>
+<script th:src="@{/script/toffice/admin.js}"></script>
+
+
+</html>

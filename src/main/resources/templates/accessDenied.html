@@ -1,0 +1,16 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+<title>Acceso denegado</title>
+</head>
+<body lang="es">
+	<div th:insert="fragments/layout :: generalHeader" class="fixed-top"></div>
+	<div class="container">
+		<br>
+		<br>
+		<h3>No tienes permitido el acceso a esta página</h3>
+	</div>
+	<div class="modal"></div>
+	<div th:insert="fragments/layout :: footer" class="fixed-bottom"></div>
+</body>
+</html>
+

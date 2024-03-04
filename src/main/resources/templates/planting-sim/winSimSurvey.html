@@ -1,0 +1,108 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"></head>
+</head>
+<!-- <body style="padding-top: 1px; background-image: url(/images/sim_compite.png); background-size: cover;" > -->
+<body style="padding-top: 1px;" >
+	<div class="row" style="border-bottom: 1px solid #737373">
+		<div class="col">
+			<nav
+				class="navbar navbar-inverse navbar-expand-sm  navbar-light nav-tabs">
+				<div class="container">
+					<img th:src="@{/images/logo.png}" style="width: 150px"
+						alt="TURBORED">
+					<button class="navbar-toggler" type="button" data-toggle="collapse"
+						data-target="#uno">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class=" collapse navbar-collapse" id="uno">
+						<ul class="navbar-nav mr-auto">
+							<li class="nav-item"><FONT SIZE=4><a th:href="@{https://www.turbored.com}" class="nav-link">www.turbored.com</a></FONT></li>
+							<li class="nav-item"><FONT SIZE=4><a th:href="@{https://www.turbored.com/cont%C3%A1ctanos}" class="nav-link">Contactanos</a></FONT></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<div >
+		<form th:action="@{/promoSim/validateImei/}" th:object="${winSimSurveyModel}"
+			th:method="post" method="post" action="register">
+			<p th:if="${confirmationMessage}" class="alert alert-success"
+				role="alert" th:text="${confirmationMessage}"></p>
+			<ul class="global-errors" th:if="${#fields.hasErrors('global')}">
+				<li class="text-danger" th:each="err : ${#fields.errors('global')}"
+					th:text="${err}">Input is incorrect</li>
+			</ul>
+			<h2 class="text-center"
+				style="background-color: #e1f56f; color: #993300">¡Concursa y
+				gana!</h2>
+			<div class="bg">
+				<div class="container">
+					<h4 style="color: 000099">Llevate un SIM TurboRed</h4>
+				</div>
+				<div class="container">
+					<h6 style="color: 000099">con 5GB, con llamadas</h6>
+				</div>
+				<div class="container">
+					<h6 style="color: #000099">a Estados Unidos y Canada</h6>
+				</div>
+				<div class="container">
+					<h6 style="color: #000099">incluidas.</h6>
+				</div>
+			</div>
+			<div class="row">
+				<div class="card col-xs-6 col-sm-6 col-md-6 col-lg-6 mx-auto" >
+					<img th:src="@{/images/simcard_gift.png}" class="img-responsive"
+						alt="Simcard Gift">
+				</div>
+				<div class="card col-xs-6 col-sm-6 col-md-6 col-lg-6 mx-auto" >
+					<div class="card-body">
+						<h6 class="card-title text-center">Datos del participante</h6>
+							<hr>
+							<div class="form-group">
+								<input type="text" class="form-control" th:field="*{fullName}"
+									id="fullName" placeholder="Nombre completo" maxlength="50"
+									required="required">
+								<p class="text-danger" th:if="${#fields.hasErrors('fullName')}"
+									th:errors="*{fullName}"></p>
+							</div>
+							<div class="form-group ">
+								<input type="text" class="form-control"
+									th:field="*{cellphoneNumber}" id="cellphoneNumber"
+									placeholder="Número celular a 10 dígitos ej. 5586410100"
+									maxlength="10"
+									minlength="10"
+									required="required">
+								<p class="text-danger"
+									th:if="${#fields.hasErrors('cellphoneNumber')}"
+									th:errors="*{cellphoneNumber}"></p>
+							</div>
+							<div class="form-group">
+								<input type="email" class="form-control" th:field="*{email}"
+									id="email" placeholder="Correo electrónico" maxlength="50"
+									required="required">
+								<p class="text-danger" th:if="${#fields.hasErrors('email')}"
+									th:errors="*{email}"></p>
+							</div>
+							<div class="form-group ">
+								<input
+									type="text" class="form-control" th:field="*{imei}" id="imei"
+									placeholder="IMEI a 15 dígitos ej. 123456106543211"
+									required="required"
+									maxlength="15" 
+									minlength="15">
+								<p class="text-danger" th:if="${#fields.hasErrors('imei')}"
+									th:errors="*{imei}"></p>
+							</div>
+
+							<div class="row justify-content-center">
+								<button type="submit" class="btn btn-primary">Participar</button>
+							</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div th:insert="fragments/layout :: footer" class="fixed-bottom"></div>
+</body>
+</html>

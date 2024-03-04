@@ -1,0 +1,30 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<div th:fragment="header">
+	<div align=left>
+		<H2
+			style="background-color: #A9D279; color: #FFFFFF; text-align: center; float: center; line-height: normal">
+			TurboRed<br>
+		</H2>
+		<hr style="clear: both;" />
+	</div>
+</div>
+<div id="footer" th:fragment="footer">
+	<div>
+		<p>Agradecemos su preferencia.</p>
+		<p>Este es un mensaje generado automáticamente por el sistema.</p>
+		<p>Favor de no responder al mismo.</p>
+		<hr style="clear: both;" />
+		<H2
+			style="background-color: #A9D279; color: #FFFFFF; text-align: center; float: center; line-height: normal">
+			Para mayor información llama al call center <span
+				th:text="${callCenterPhone}"></span> <br> <a
+				th:href="@{https://www.turbored.com/}"
+				style="background-color: #A9D279; color: #FFFFFF;">www.turbored.com</a>
+		</H2>
+	</div>
+</div>
+</body>
+</html>

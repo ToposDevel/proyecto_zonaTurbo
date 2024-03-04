@@ -1,0 +1,88 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+
+</head>
+<body lang="es">
+	<div th:insert="fragments/layout :: generalHeader" class="fixed-top"></div>
+	<div class="container">
+		<br>
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mx-auto">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 mx-auto">
+							<h4 class="text-center">Agrega minutos adicionales a tu Turbo office</h4>
+						</div>
+					</div>
+					<hr>
+				</div>
+				<p th:if="${confirmationMessage}" class="alert alert-success"
+					role="alert" th:text="${confirmationMessage}"></p>
+				<p th:if="${failedMessage}" class="alert alert-danger" role="alert"
+					th:text="${failedMessage}"></p>
+				<p id="errorMessage" class="alert alert-danger" role="alert"
+					style="display: none;"></p>
+				<div class="card-body">
+					<form id="card-form"
+						th:action="@{/turboOffice/extraRecharge}"
+						th:object="${turboOfficeRechargeModel}" th:method="POST"
+						method="POST" action="register"
+						th:if="${turboOfficeRechargeModel.paymentLink == null}">
+						<ul class="global-errors" th:if="${#fields.hasErrors('global')}">
+							<li class="text-danger"
+								th:each="err : ${#fields.errors('global')}" th:text="${err}">Input
+								is incorrect</li>
+						</ul>
+						<h4 th:if="${turboOfficeRechargeModel.turboOfficeRechargeSelected} != null">
+							<span th:text="${turboOfficeRechargeModel.turboOfficeRechargeSelected.name}"></span>
+							<span >- $</span>
+							<span th:text="${turboOfficeRechargeModel.turboOfficeRechargeSelected.price}"></span>
+						</h4>
+						<div class="form-group">
+							<label for="virtualNumber">Numero virtual o Turbored </label> <input
+								type="text" class="form-control" th:field="*{virtualNumber}"
+								id="virtualNumber"
+								placeholder="Numero celular a 10 digitos ej. 5586410100"
+								minlength="10" maxlength="10" required="required">
+							<p class="text-danger"
+								th:if="${#fields.hasErrors('virtualNumber')}"
+								th:errors="*{virtualNumber}"></p>
+						</div>
+						<div class="form-group">
+							<label for="Email" th:text="#{user.email.input}"></label> <input
+								type="email" class="form-control" th:field="*{email}" id="email"
+								placeholder="Ej. juan@gmail.com" maxlength="50"
+								required="required">
+							<p class="text-danger" th:if="${#fields.hasErrors('email')}"
+								th:errors="*{email}"></p>
+						</div>
+						<div class="row justify-content-center">
+							<button type="submit" class="btn btn-primary">Generar link de pago</button>
+						</div>
+						
+						<input type="hidden" id="price" th:field="*{price}" />
+						<input type="hidden" id="turboOfficePlanName" th:field="*{turboOfficePlanName}" />
+						<!-- <input type="hidden" id="company" th:field="*{company}" /> -->
+					</form>
+					<div th:if="${turboOfficeRechargeModel.paymentLink != null}">
+						<a th:href="@{${turboOfficeRechargeModel.paymentLink}}"
+							class="btn btn-circle btn-default text-info"><b>Click
+								aqui para PAGAR ahora.<b></b></a>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mx-auto" th:if="${turboOfficeRechargeModel.paymentLink == null}">
+				<br> <br> <br> <br> <img
+					th:src="@{/images/turbo_office_recharge.jpg}" class="img-responsive"
+					alt="Recarga Turbo office">
+			</div>
+		</div>
+	</div>
+
+	<div class="modal"></div>
+	<div th:insert="fragments/layout :: footer" class="fixed-bottom"></div>
+</body>
+<script th:src="@{/script/util.js}"></script>
+<script th:href="@{/script/toffice/recharge}"></script>
+</html>
